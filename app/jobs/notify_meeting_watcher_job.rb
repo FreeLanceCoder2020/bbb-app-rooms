@@ -31,8 +31,9 @@ class NotifyMeetingWatcherJob < ApplicationJob
     if !data[:meeting_in_progress]
       data[:action] = 'end'
     else
-      data[:elapsed_time] = meeting_start_time
-      data[:participant_count] = participant_count
+      meeting_info_dict = meeting_info
+      data[:elapsed_time] = meeting_info_dict[:startTime]
+      data[:participant_count] = meeting_info_dict[:participantCount]
     end
 
     MeetingInfoChannel.broadcast_to(room, data)

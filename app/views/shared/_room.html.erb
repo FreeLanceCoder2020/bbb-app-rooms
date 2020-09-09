@@ -64,8 +64,10 @@
     <%= content_tag(:p, '', :class => "pull-left" , :style => "display:none; margin-left: 5px; margin-top: 5px", :id => 'meeting-info-msg') %>
     <%= content_tag(:p, '', :class => "pull-left", :style => "display:none; margin-left: 5px; margin-top: 5px", :id => 'elapsed-time-msg') %>
   
-    <%= content_tag(:p, t('default.room.waitmodmsg'), :style => "display:none;", id: 'wait-for-mod-msg') %>
-  
+    <% if !@user.admin? && !@user.moderator?(bigbluebutton_moderator_roles) %>
+      <%= content_tag(:p, t('default.room.waitmodmsg'), :style => "display:none;", id: 'wait-for-mod-msg') %>
+    <% end %>
+    
     </div>
   </div>
 

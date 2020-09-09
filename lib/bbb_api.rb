@@ -39,19 +39,9 @@ module BbbApi
   end
 
   def meeting_info
-    bbb.get_meeting_info(@room.handler, @user)
-  end
-
-  def participant_count
-    return false unless mod_in_room?
-
-    meeting_info[:participantCount]
-  end
-
-  def meeting_start_time
     return nil unless mod_in_room?
 
-    meeting_info[:startTime]
+    bbb.get_meeting_info(@room.handler, @user)
   end
 
   def end_meeting

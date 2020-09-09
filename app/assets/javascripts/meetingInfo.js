@@ -2,16 +2,17 @@ $(document).on('turbolinks:load', function(){
   var room = window.location.pathname.split('/')[3];
   App.meetingInfo = App.cable.subscriptions.create({channel: "MeetingInfoChannel", room_id: room}, {
     connected: function() {
-        console.log("Connected to meeting info channel");
+      console.log("Connected to meeting info channel");
     },
     disconnected: function() {
+      console.log("Disconnected to meeting info channel");
     },
     received: function(data) {
       console.log("received data: " + JSON.stringify(data));
       if (data.meeting_in_progress == true){
         startTime = data.elapsed_time
         in_progress = true;
-        show_end_meeting_btn();
+        prep_meeting_start_elems();
         display_participant_count(data.participant_count);
         start_elapsed_time();
       }
@@ -26,14 +27,16 @@ $(document).on('turbolinks:load', function(){
 var startTime = 0;
 var in_progress = false;
 
-var show_end_meeting_btn = function(){
-  $('#end-meeting-btn').show();
+var prep_meeting_start_elems = function(){
+  $('#end-meeting-btn').show(); 
+  $('#wait-for-mod-msg').hide();
 }
 
 var hide_elements = function(){
   $('#end-meeting-btn').hide();
   $('#meeting-info-msg').hide();
   $('#elapsed-time-msg').hide();
+  $('#wait-for-mod-msg').hide();
 }
 
 var display_participant_count = function(participantCount){
