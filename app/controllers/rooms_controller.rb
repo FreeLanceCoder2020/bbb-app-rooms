@@ -30,7 +30,7 @@ class RoomsController < ApplicationController
   before_action :check_for_cancel, only: [:create, :update]
   before_action :allow_iframe_requests
   before_action :set_current_locale
-  after_action :broadcast_meeting, only: [:show, :launch, :meeting_end]
+  after_action :broadcast_meeting, only: [:meeting_end]
 
   # GET /rooms/1
   # GET /rooms/1.json
@@ -159,7 +159,7 @@ class RoomsController < ApplicationController
     redirect_to(room_path(params[:id], launch_nonce: params[:launch_nonce]))
   end
 
-  helper_method :recordings, :recording_date, :recording_length, :bigbluebutton_moderator_roles, :mod_in_room?
+  helper_method :recordings, :recording_date, :recording_length, :bigbluebutton_moderator_roles, :mod_in_room?, :meeting_info, :elapsed_time
 
   private
 

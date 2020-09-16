@@ -39,7 +39,25 @@ module BbbApi
   end
 
   def meeting_info
+    return nil unless mod_in_room?
+
     bbb.get_meeting_info(@room.handler, @user)
+  end
+
+  def elapsed_time
+    return 0 unless mod_in_room?
+
+    time = DateTime.now - meeting_info[:startTime]
+
+    hrs = (time * 24).floor
+    time -= hrs / 24.to_f
+
+    mins = (time * 24 * 60).floor
+    time -= mins / 1440.to_f
+
+    secs = (time * 24 * 60 * 60).floor
+
+    "#{add_zero_maybe(hrs)}:#{add_zero_maybe(mins)}:#{add_zero_maybe(secs)}"
   end
 
   def participant_count
@@ -170,5 +188,11 @@ module BbbApi
   # Removes trailing forward slash from a URL.
   def remove_slash(str)
     str.nil? ? nil : str.chomp('/')
+  end
+
+  def add_zero_maybe(num)
+    num = '0' + num.to_s if num < 10
+
+    num
   end
 end
