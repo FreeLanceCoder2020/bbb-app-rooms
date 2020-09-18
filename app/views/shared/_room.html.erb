@@ -46,42 +46,42 @@
   <!-- room -->
   <div class="row">
     <div class="col-12">
-    <h1><%= @room.name %></h1>
+      <h1><%= @room.name %></h1>
 
-    <h3><%= @room.description %></h3>
+      <h3><%= @room.description %></h3>
 
-    <div class = "pull-left">
-      <%= button_tag t('default.room.join'), :type => 'button', :class => "btn btn-primary", id: 'join-room-btn', data: {url: meeting_join_path(@room, :launch_nonce => @launch_nonce), room: @room.id} %>
-      
-      <% if @user.admin? || @user.moderator?(bigbluebutton_moderator_roles) %>
-      <% style = "display:none;" %>
-        <% if mod_in_room? %>
-          <% showElems = true %>
-          <% meeting_info_dict = meeting_info %>
-          <% elapsedTime = elapsed_time %>
-          <% pplPresent = meeting_info_dict[:participantCount] %>
-           <% if pplPresent == 1 %>
-            <% pplprson = "person" %>
-          <% else %>
-            <% pplprson = "people" %>
-          <% end %>
-          <% style = nil %>
-        <% end %>  
-        <%= button_tag t('default.room.endmeeting'), :type => 'button', :class => "btn btn-danger", id: 'end-meeting-btn', style: style, data: {url: meeting_end_path(@room, :launch_nonce => @launch_nonce), room: @room.id} %>
-      <% end %> 
-    </div>
+      <div class = "pull-left">
+        <%= button_tag t('default.room.join'), :type => 'button', :class => "btn btn-primary", id: 'join-room-btn', data: {url: meeting_join_path(@room, :launch_nonce => @launch_nonce), room: @room.id} %>
+        
+        <% if @user.admin? || @user.moderator?(bigbluebutton_moderator_roles) %>
+        <% style = "display:none;" %>
+          <% if mod_in_room? %>
+            <% showElems = true %>
+            <% meeting_info_dict = meeting_info %>
+            <% elapsedTime = elapsed_time %>
+            <% pplPresent = meeting_info_dict[:participantCount] %>
+            <% if pplPresent == 1 %>
+              <% pplprson = "person" %>
+            <% else %>
+              <% pplprson = "people" %>
+            <% end %>
+            <% style = nil %>
+          <% end %>  
+          <%= button_tag t('default.room.endmeeting'), :type => 'button', :class => "btn btn-danger", id: 'end-meeting-btn', style: style, data: {url: meeting_end_path(@room, :launch_nonce => @launch_nonce), room: @room.id} %>
+        <% end %> 
+      </div>
 
-    <div class = "pull-left" , style = "<%style%> display:inline; margin-left: 5px; margin-top: 5px"> 
-      <p id= "meeting-info-msg"> 
-        <span id="num-ppl-in-meeting-elem"> <%= pplPresent %> </span>
-        <span id="ppl-or-person-elem"> <%= pplprson %> </span>
-        present. The session has been running for 
-        <span id="elapsed-time-elem"> <%= elapsedTime %> </span> 
-        seconds.
-      </p>
-    </div>
+      <div class = "pull-left" , style = "<%style%> display:inline; margin-left: 5px; margin-top: 5px"> 
+        <p id= "meeting-info-msg"> 
+          <span id="num-ppl-in-meeting-elem"> <%= pplPresent %> </span>
+          <span id="ppl-or-person-elem"> <%= pplprson %> </span>
+          present. The session has been running for 
+          <span id="elapsed-time-elem"> <%= elapsedTime %> </span> 
+          seconds.
+        </p>
+      </div>
    
-    <%= content_tag(:p, t('default.room.waitmodmsg'), :style => "display:none;", id: 'wait-for-mod-msg') %>
+      <%= content_tag(:p, t('default.room.waitmodmsg'), :style => "display:none;", id: 'wait-for-mod-msg') %>
   
     </div>
   </div>
